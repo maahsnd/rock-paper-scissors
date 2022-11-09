@@ -13,90 +13,83 @@ function getComputerChoice() {
   }
   
 function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toLowerCase();
-    console.log(playerSelection);
-    console.log(computerSelection);
+   computerSelection = getComputerChoice();
     if (playerSelection === 'paper') {
         if (computerSelection === 'paper'){
-            return tie();
+            return tie(playerSelection, computerSelection);
         }
         if (computerSelection === 'rock') {
-            return winner('Dumb human');
+            return displayRound(playerSelection, computerSelection, 'human');
         }
         else {
-            return winner('Rockstar computer');
+            return displayRound(playerSelection, computerSelection, 'computer');
         }
     }
     else if (playerSelection === 'rock') {
         if (computerSelection === 'paper'){
-            return winner('Rockstar computer');
+            return displayRound(playerSelection, computerSelection, 'computer');
         }
         if (computerSelection === 'rock') {
-            return tie();
+            return tie(playerSelection, computerSelection);
         }
         else {
-            return winner('Dumb human');
+            return displayRound(playerSelection, computerSelection, 'human');
         }
     }
     else {
         if (computerSelection === 'scissors') {
-            return tie();
+            return tie(playerSelection, computerSelection);
     }    
         if (computerSelection === 'rock') {
-            return winner('Rockstar computer');
+            return displayRound(playerSelection, computerSelection, 'computer');
         }
         else {
-            return winner('Dumb human');
+            return displayRound(playerSelection, computerSelection, 'human');
         }
 } }
 
-function winner(string) {
-    alert(`${string} wins!`);
-    return string;
+function displayRound(playerSelection, computerSelection, winner) {
+  console.log('52');
+  result.textContent = `Human ${playerSelection} vs Computer ${computerSelection}`;
+  score(winner);
+  return;
 }
 
-function tie() {
-   alert('Tie! Suckers!'); 
+function tie(playerSelection, computerSelection) {
+   result.textContent = `Human ${playerSelection} vs Computer ${computerSelection}`;
+   return; 
 }
 
-function getHumanChoice() {
-    let choice = prompt("Rock - Paper - Scissors? (choose one)").toLowerCase();
-    if (choice === 'rock' || choice === 'paper' || choice === 'scissors') {
-        return choice;
-    } 
-    else {
-        return getHumanChoice();
-    }    
+let humanScore = 0;
+let computerScore = 0;
+
+function score(winner) {
+  let champ;
+  ///default to computer to eliminate an else
+  let champName = 'computer';
+  if (winner === 'human') 
+    humanScore ++;
+    else 
+      computerScore ++;
+  scoreBoard.textContent = `Human: ${humanScore}  Computer: ${computerScore}`;
+  if (humanScore === 5 || computerScore === 5) {
+    champ = Math.max(humanScore, computerScore);
+    if (champ === humanScore)
+      champName = 'human';
+    winMessage.textContent = `${champName}, ${champName}, chicken dinner (winner, winner)`;
+  }
+  return;
 }
 
-function game() {
-    let computerWins = 0;
-    let humanWins = 0;
-    let playerSelection = getHumanChoice();
-    let roundResult;
-    for (let i = 0; i < 5; i++) {
-        roundResult = playRound(playerSelection, getComputerChoice());
-        if (roundResult === 'Dumb human') {
-            humanWins ++;
-        }
-        else if (roundResult === 'Dumb human') {
-            computerWins ++;
-        }
-        else {
-            //do nothing, tie
-        }
-    }
-    console.log(humanWins);
-    console.log(computerWins);
-    if (humanWins > computerWins) {
-        return alert("final result: dumb human wins");
-    }
-    else if (computerWins > humanWins) {
-        return alert("final result: what did you expect? cpu W");
-    }
-    else {
-        return alert("Nobody wins. How do you like that? Not very fun huh");
-    }
-}
+const result = document.querySelector('#matchup');
+const scoreBoard = document.querySelector('#scoreBoard');
+const winMessage = document.querySelector('#winner');
 
-game();
+const choices = document.querySelectorAll('.choice');
+choices.forEach(choice => {
+  choice.addEventListener('click', (e) =>
+  {
+    let elementId = e.target.id;
+    playRound(elementId, getComputerChoice);
+  });
+});

@@ -1,0 +1,36 @@
+.choice {
+  padding: 20px;
+  font-size: 30px;
+  margin: 10px 8px 10px 8px;
+  border-radius: 50%;
+}
+
+.choice, #scoreBoard {
+    font-family:'Copperplate Gothic Light', Courier, monospace;
+}
+
+#rock:hover {
+    background-color: rgb(100, 104, 107);
+}
+
+#paper:hover {
+    background-color: cornsilk;
+}
+
+#scissors:hover {
+    background-color: steelblue;
+}
+
+.gameInfo {
+    font-size: 25px;
+    margin: 20px 8px 10px 40px;
+}
+
+#scoreBoard {
+    color: rebeccapurple;
+}
+
+#winner {
+    color: green;
+    font-size: 40px;
+}
